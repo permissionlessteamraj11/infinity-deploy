@@ -14,16 +14,364 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_banned_devices: {
+        Row: {
+          banned_at: string
+          device_fingerprint: string
+          reason: string | null
+        }
+        Insert: {
+          banned_at?: string
+          device_fingerprint: string
+          reason?: string | null
+        }
+        Update: {
+          banned_at?: string
+          device_fingerprint?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
+      admin_login_attempts: {
+        Row: {
+          created_at: string
+          device_fingerprint: string
+          id: string
+          success: boolean
+        }
+        Insert: {
+          created_at?: string
+          device_fingerprint: string
+          id?: string
+          success: boolean
+        }
+        Update: {
+          created_at?: string
+          device_fingerprint?: string
+          id?: string
+          success?: boolean
+        }
+        Relationships: []
+      }
+      chats: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          read: boolean
+          sender: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean
+          sender: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean
+          sender?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      deployment_env: {
+        Row: {
+          deployment_id: string
+          id: string
+          key: string
+          user_id: string
+          value: string
+        }
+        Insert: {
+          deployment_id: string
+          id?: string
+          key: string
+          user_id: string
+          value: string
+        }
+        Update: {
+          deployment_id?: string
+          id?: string
+          key?: string
+          user_id?: string
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deployment_env_deployment_id_fkey"
+            columns: ["deployment_id"]
+            isOneToOne: false
+            referencedRelation: "deployments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deployment_logs: {
+        Row: {
+          created_at: string
+          deployment_id: string
+          id: string
+          level: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          deployment_id: string
+          id?: string
+          level?: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          deployment_id?: string
+          id?: string
+          level?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deployment_logs_deployment_id_fkey"
+            columns: ["deployment_id"]
+            isOneToOne: false
+            referencedRelation: "deployments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deployments: {
+        Row: {
+          branch: string | null
+          build_cmd: string | null
+          created_at: string
+          deploy_cmd: string | null
+          id: string
+          is_banned: boolean
+          name: string
+          port: number | null
+          repo_url: string | null
+          runtime: string | null
+          source_type: Database["public"]["Enums"]["deploy_source"]
+          status: Database["public"]["Enums"]["deploy_status"]
+          status_message: string | null
+          updated_at: string
+          user_id: string
+          zip_path: string | null
+        }
+        Insert: {
+          branch?: string | null
+          build_cmd?: string | null
+          created_at?: string
+          deploy_cmd?: string | null
+          id?: string
+          is_banned?: boolean
+          name: string
+          port?: number | null
+          repo_url?: string | null
+          runtime?: string | null
+          source_type: Database["public"]["Enums"]["deploy_source"]
+          status?: Database["public"]["Enums"]["deploy_status"]
+          status_message?: string | null
+          updated_at?: string
+          user_id: string
+          zip_path?: string | null
+        }
+        Update: {
+          branch?: string | null
+          build_cmd?: string | null
+          created_at?: string
+          deploy_cmd?: string | null
+          id?: string
+          is_banned?: boolean
+          name?: string
+          port?: number | null
+          repo_url?: string | null
+          runtime?: string | null
+          source_type?: Database["public"]["Enums"]["deploy_source"]
+          status?: Database["public"]["Enums"]["deploy_status"]
+          status_message?: string | null
+          updated_at?: string
+          user_id?: string
+          zip_path?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          is_banned: boolean
+          referral_code: string
+          referred_by: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          is_banned?: boolean
+          referral_code?: string
+          referred_by?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          is_banned?: boolean
+          referral_code?: string
+          referred_by?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_fkey"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_earnings: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          plan_name: string | null
+          referee_id: string
+          referrer_id: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          plan_name?: string | null
+          referee_id: string
+          referrer_id: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          plan_name?: string | null
+          referee_id?: string
+          referrer_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          metadata: Json | null
+          reason: string
+          type: Database["public"]["Enums"]["tx_type"]
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          reason: string
+          type: Database["public"]["Enums"]["tx_type"]
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          reason?: string
+          type?: Database["public"]["Enums"]["tx_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          balance_inr: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance_inr?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance_inr?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      credit_referral_commission: {
+        Args: { _buyer: string; _plan_amount: number; _plan_name: string }
+        Returns: undefined
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "admin"
+      deploy_source: "github" | "zip"
+      deploy_status:
+        | "queued"
+        | "building"
+        | "running"
+        | "stopped"
+        | "failed"
+        | "crashed"
+      tx_type: "credit" | "debit"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +498,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "admin"],
+      deploy_source: ["github", "zip"],
+      deploy_status: [
+        "queued",
+        "building",
+        "running",
+        "stopped",
+        "failed",
+        "crashed",
+      ],
+      tx_type: ["credit", "debit"],
+    },
   },
 } as const
