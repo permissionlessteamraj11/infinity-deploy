@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /raj
+Disallow: /app/
+Disallow: /_authenticated/
