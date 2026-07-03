@@ -34,7 +34,7 @@ function Manage() {
   };
   useEffect(() => { load(); }, []);
 
-  const action = async (id: string, status: Deployment["status"], msg: string) => {
+  const action = async (id: string, status: "running" | "stopped" | "building" | "queued" | "failed" | "crashed", msg: string) => {
     const { error } = await supabase.from("deployments").update({ status, status_message: msg, updated_at: new Date().toISOString() }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(msg);

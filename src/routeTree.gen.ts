@@ -15,7 +15,14 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogsRouteImport } from './routes/blogs'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppManageRouteImport } from './routes/_authenticated/app.manage'
+import { Route as AuthenticatedAppHomeRouteImport } from './routes/_authenticated/app.home'
+import { Route as AuthenticatedAppDeployRouteImport } from './routes/_authenticated/app.deploy'
+import { Route as AuthenticatedAppAiRouteImport } from './routes/_authenticated/app.ai'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -47,65 +54,146 @@ const BlogsRoute = BlogsRouteImport.update({
   path: '/blogs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppManageRoute = AuthenticatedAppManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppHomeRoute = AuthenticatedAppHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppDeployRoute = AuthenticatedAppDeployRouteImport.update({
+  id: '/deploy',
+  path: '/deploy',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppAiRoute = AuthenticatedAppAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/ai': typeof AuthenticatedAppAiRoute
+  '/app/deploy': typeof AuthenticatedAppDeployRoute
+  '/app/home': typeof AuthenticatedAppHomeRoute
+  '/app/manage': typeof AuthenticatedAppManageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/ai': typeof AuthenticatedAppAiRoute
+  '/app/deploy': typeof AuthenticatedAppDeployRoute
+  '/app/home': typeof AuthenticatedAppHomeRoute
+  '/app/manage': typeof AuthenticatedAppManageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/blogs': typeof BlogsRoute
   '/contact': typeof ContactRoute
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/ai': typeof AuthenticatedAppAiRoute
+  '/_authenticated/app/deploy': typeof AuthenticatedAppDeployRoute
+  '/_authenticated/app/home': typeof AuthenticatedAppHomeRoute
+  '/_authenticated/app/manage': typeof AuthenticatedAppManageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/blogs'
     | '/contact'
     | '/docs'
     | '/pricing'
     | '/privacy'
     | '/terms'
+    | '/app'
+    | '/app/ai'
+    | '/app/deploy'
+    | '/app/home'
+    | '/app/manage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blogs' | '/contact' | '/docs' | '/pricing' | '/privacy' | '/terms'
+  to:
+    | '/'
+    | '/auth'
+    | '/blogs'
+    | '/contact'
+    | '/docs'
+    | '/pricing'
+    | '/privacy'
+    | '/terms'
+    | '/app'
+    | '/app/ai'
+    | '/app/deploy'
+    | '/app/home'
+    | '/app/manage'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/blogs'
     | '/contact'
     | '/docs'
     | '/pricing'
     | '/privacy'
     | '/terms'
+    | '/_authenticated/app'
+    | '/_authenticated/app/ai'
+    | '/_authenticated/app/deploy'
+    | '/_authenticated/app/home'
+    | '/_authenticated/app/manage'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BlogsRoute: typeof BlogsRoute
   ContactRoute: typeof ContactRoute
   DocsRoute: typeof DocsRoute
@@ -158,6 +246,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -165,11 +267,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/manage': {
+      id: '/_authenticated/app/manage'
+      path: '/manage'
+      fullPath: '/app/manage'
+      preLoaderRoute: typeof AuthenticatedAppManageRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/home': {
+      id: '/_authenticated/app/home'
+      path: '/home'
+      fullPath: '/app/home'
+      preLoaderRoute: typeof AuthenticatedAppHomeRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/deploy': {
+      id: '/_authenticated/app/deploy'
+      path: '/deploy'
+      fullPath: '/app/deploy'
+      preLoaderRoute: typeof AuthenticatedAppDeployRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/ai': {
+      id: '/_authenticated/app/ai'
+      path: '/ai'
+      fullPath: '/app/ai'
+      preLoaderRoute: typeof AuthenticatedAppAiRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAiRoute: typeof AuthenticatedAppAiRoute
+  AuthenticatedAppDeployRoute: typeof AuthenticatedAppDeployRoute
+  AuthenticatedAppHomeRoute: typeof AuthenticatedAppHomeRoute
+  AuthenticatedAppManageRoute: typeof AuthenticatedAppManageRoute
+}
+
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAiRoute: AuthenticatedAppAiRoute,
+  AuthenticatedAppDeployRoute: AuthenticatedAppDeployRoute,
+  AuthenticatedAppHomeRoute: AuthenticatedAppHomeRoute,
+  AuthenticatedAppManageRoute: AuthenticatedAppManageRoute,
+}
+
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   BlogsRoute: BlogsRoute,
   ContactRoute: ContactRoute,
   DocsRoute: DocsRoute,
