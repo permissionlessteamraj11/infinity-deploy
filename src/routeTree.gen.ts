@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RajRouteImport } from './routes/raj'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as DocsRouteImport } from './routes/docs'
@@ -18,7 +20,9 @@ import { Route as BlogsRouteImport } from './routes/blogs'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RajPanelRouteImport } from './routes/raj.panel'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
 import { Route as AuthenticatedAppManageRouteImport } from './routes/_authenticated/app.manage'
 import { Route as AuthenticatedAppHomeRouteImport } from './routes/_authenticated/app.home'
 import { Route as AuthenticatedAppDeployRouteImport } from './routes/_authenticated/app.deploy'
@@ -27,6 +31,16 @@ import { Route as AuthenticatedAppAiRouteImport } from './routes/_authenticated/
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RajRoute = RajRouteImport.update({
+  id: '/raj',
+  path: '/raj',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -68,11 +82,22 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RajPanelRoute = RajPanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => RajRoute,
+} as any)
 const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   id: '/app',
   path: '/app',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAppSettingsRoute =
+  AuthenticatedAppSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppManageRoute = AuthenticatedAppManageRouteImport.update({
   id: '/manage',
   path: '/manage',
@@ -102,12 +127,16 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/raj': typeof RajRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/raj/panel': typeof RajPanelRoute
   '/app/ai': typeof AuthenticatedAppAiRoute
   '/app/deploy': typeof AuthenticatedAppDeployRoute
   '/app/home': typeof AuthenticatedAppHomeRoute
   '/app/manage': typeof AuthenticatedAppManageRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,12 +146,16 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/raj': typeof RajRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/raj/panel': typeof RajPanelRoute
   '/app/ai': typeof AuthenticatedAppAiRoute
   '/app/deploy': typeof AuthenticatedAppDeployRoute
   '/app/home': typeof AuthenticatedAppHomeRoute
   '/app/manage': typeof AuthenticatedAppManageRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -134,12 +167,16 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/raj': typeof RajRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/raj/panel': typeof RajPanelRoute
   '/_authenticated/app/ai': typeof AuthenticatedAppAiRoute
   '/_authenticated/app/deploy': typeof AuthenticatedAppDeployRoute
   '/_authenticated/app/home': typeof AuthenticatedAppHomeRoute
   '/_authenticated/app/manage': typeof AuthenticatedAppManageRoute
+  '/_authenticated/app/settings': typeof AuthenticatedAppSettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,12 +188,16 @@ export interface FileRouteTypes {
     | '/docs'
     | '/pricing'
     | '/privacy'
+    | '/raj'
+    | '/sitemap.xml'
     | '/terms'
     | '/app'
+    | '/raj/panel'
     | '/app/ai'
     | '/app/deploy'
     | '/app/home'
     | '/app/manage'
+    | '/app/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,12 +207,16 @@ export interface FileRouteTypes {
     | '/docs'
     | '/pricing'
     | '/privacy'
+    | '/raj'
+    | '/sitemap.xml'
     | '/terms'
     | '/app'
+    | '/raj/panel'
     | '/app/ai'
     | '/app/deploy'
     | '/app/home'
     | '/app/manage'
+    | '/app/settings'
   id:
     | '__root__'
     | '/'
@@ -182,12 +227,16 @@ export interface FileRouteTypes {
     | '/docs'
     | '/pricing'
     | '/privacy'
+    | '/raj'
+    | '/sitemap.xml'
     | '/terms'
     | '/_authenticated/app'
+    | '/raj/panel'
     | '/_authenticated/app/ai'
     | '/_authenticated/app/deploy'
     | '/_authenticated/app/home'
     | '/_authenticated/app/manage'
+    | '/_authenticated/app/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -199,6 +248,8 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
+  RajRoute: typeof RajRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
 }
 
@@ -209,6 +260,20 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/raj': {
+      id: '/raj'
+      path: '/raj'
+      fullPath: '/raj'
+      preLoaderRoute: typeof RajRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -267,12 +332,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/raj/panel': {
+      id: '/raj/panel'
+      path: '/panel'
+      fullPath: '/raj/panel'
+      preLoaderRoute: typeof RajPanelRouteImport
+      parentRoute: typeof RajRoute
+    }
     '/_authenticated/app': {
       id: '/_authenticated/app'
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AuthenticatedAppRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/settings': {
+      id: '/_authenticated/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/manage': {
       id: '/_authenticated/app/manage'
@@ -310,6 +389,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppDeployRoute: typeof AuthenticatedAppDeployRoute
   AuthenticatedAppHomeRoute: typeof AuthenticatedAppHomeRoute
   AuthenticatedAppManageRoute: typeof AuthenticatedAppManageRoute
+  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
@@ -317,6 +397,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppDeployRoute: AuthenticatedAppDeployRoute,
   AuthenticatedAppHomeRoute: AuthenticatedAppHomeRoute,
   AuthenticatedAppManageRoute: AuthenticatedAppManageRoute,
+  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
 }
 
 const AuthenticatedAppRouteWithChildren =
@@ -333,6 +414,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface RajRouteChildren {
+  RajPanelRoute: typeof RajPanelRoute
+}
+
+const RajRouteChildren: RajRouteChildren = {
+  RajPanelRoute: RajPanelRoute,
+}
+
+const RajRouteWithChildren = RajRoute._addFileChildren(RajRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -342,6 +433,8 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
+  RajRoute: RajRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
