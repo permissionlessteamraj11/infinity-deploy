@@ -7,7 +7,10 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — EliteHosting" },
-      { name: "description", content: "Get in touch with the EliteHosting team. Support, sales, and partnerships." },
+      {
+        name: "description",
+        content: "Get in touch with the EliteHosting team. Support, sales, and partnerships.",
+      },
       { property: "og:title", content: "Contact — EliteHosting" },
       { property: "og:description", content: "Reach the EliteHosting team." },
     ],
@@ -23,7 +26,10 @@ function Contact() {
         <h1>Get in touch</h1>
         <p className="mt-2 text-sm text-muted-foreground">We usually reply within 24 hours.</p>
         <div className="mt-8 grid gap-3 sm:grid-cols-2">
-          <a href="mailto:support@elitehosting.app" className="glass-card p-5 hover:border-primary/40 transition-colors">
+          <a
+            href="mailto:support@elitehosting.app"
+            className="glass-card p-5 hover:border-primary/40 transition-colors"
+          >
             <Mail className="h-4 w-4 text-primary mb-2" />
             <h3 className="text-sm font-semibold">Email support</h3>
             <p className="text-xs text-muted-foreground mt-1">support@elitehosting.app</p>

@@ -61,10 +61,14 @@ export function SiteHeader() {
               </nav>
               <div className="mt-6 pt-6 border-t border-border/60 flex flex-col gap-2">
                 <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/auth" onClick={() => setOpen(false)}>Log in</Link>
+                  <Link to="/auth" onClick={() => setOpen(false)}>
+                    Log in
+                  </Link>
                 </Button>
                 <Button asChild size="sm" className="w-full">
-                  <Link to="/auth" onClick={() => setOpen(false)}>Get started</Link>
+                  <Link to="/auth" onClick={() => setOpen(false)}>
+                    Get started
+                  </Link>
                 </Button>
               </div>
             </SheetContent>
